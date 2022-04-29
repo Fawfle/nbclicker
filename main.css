@@ -1,0 +1,627 @@
+:root {
+  --background-image: url("./images/background0.png");
+  --background-repeat: round;
+  --background-position: top left;
+
+  --background-color: rgb(255, 255, 255);
+  --inverse-color: rgb(0, 0, 0);
+
+  --button-color: #ffffff;
+  --secondary-color: rgb(238, 238, 238, 0.8);
+
+  --modal-opacity: 1;
+
+  --moving-clicker-width: 9.9%;
+
+  --y-position: 35%;
+  --x-position: 45%;
+  --level-width: 10%;
+  
+}
+.notification {
+  opacity: 1;
+  background-color: var(--background-color);
+  color: var(--inverse-color);
+  border: 2px solid var(--inverse-color);
+  transition: all 0.6s;
+  font-size: 18px;
+  text-align: center;
+  vertical-align: middle;
+  margin: 10px;
+  padding: 10px;
+  width: 260px;
+  z-index: 10;
+  position: relative;
+}
+.goldennuggetnotification {
+  width: 260px;
+  top: 0;
+  float: right;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-color);
+}
+
+.sectionLeft::-webkit-scrollbar {
+  display: none;
+}
+.sectionRight::-webkit-scrollbar {
+  display: none;
+}
+
+.sectionLeft {
+  top: 0%;
+  float: left;
+  width: 77%;
+  height: 95%;
+  margin-bottom: 5%;
+  position: fixed;
+  background-image: var(--background-image);
+  background-repeat: var(--background-repeat);
+  background-position: var(--background-position);
+  background-color: var(--background-color);
+  color: var(--inverse-color);
+  z-index: 1;
+  overflow: auto;
+  scrollbar-width: none;
+}
+.sectionRight {
+  border-left-color: var(--inverse-color);
+  background-color: var(--background-color);
+  color: var(--inverse-color);
+  border-left-width: 2px;
+  border-left-style: solid;
+  padding: 10px;
+  top: 0%;
+  text-align: left;
+  right: -2px;
+  position: fixed;
+  width: 22%;
+  z-index: 8;
+  height: 93%;
+  overflow: auto;
+  scrollbar-width: none;
+}
+
+.headContainer {
+  background-color: var(--secondary-color);
+  width: 40%;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 24px;
+  font-weight: bold;
+  font-family: "arial";
+  margin: 25px;
+  text-align: center;
+}
+.goldenNugget {
+  background-image: url("./images/nugget.png");
+  background-size: contain;
+  z-index: 100000;
+  position: absolute;
+  height: 7vw;
+  width: 7vw;
+}
+#clicker {
+  cursor: pointer;
+  color: var(--inverse-color);
+  font-family: arial;
+  font-size: 60px;
+  text-align: center;
+  background-color: var(--button-color);
+  height: 138px;
+  width: 510px;
+  position: relative;
+  border: 5px solid var(--inverse-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease-in-out;
+}
+#clicker:hover {
+  transform: scale(1.05);
+}
+#clicker:active {
+  transform: scale(0.96);
+}
+
+#clicker > .number {
+  z-index: 100;
+  font-size: 36px;
+  color: var(--inverse-color);
+  position: absolute;
+  font-weight: bolder;
+}
+
+.shopButton {
+  cursor: pointer;
+  background-color: var(--secondary-color);
+  transition: all 0.2s ease-in-out;
+  border-radius: 10px;
+  width: 100%;
+  margin: 10px 0px 10px 0px;
+  font-family: "arial";
+}
+.shopButton:hover {
+  background-color: rgb(181, 181, 181, 0.7);
+  transition: all 0.2s ease-in-out;
+}
+
+.shopButton #image {
+  width: 25%;
+}
+.shopButton img {
+  height: 5vw;
+  width: 5vw;
+}
+
+.shopButton #nameAndCost {
+  margin: 0px;
+  width: 50%;
+  text-align: left;
+}
+
+.shopButton #nameAndCost div:first-of-type {
+  font-size: 24px;
+  text-align: left;
+}
+
+.shopButton #amount {
+  font-size: 48px;
+  color: #595959;
+  font-family: "roboto";
+  width: 15%;
+}
+
+.unselectable {
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+
+.sectionFooter {
+  position: fixed;
+  padding: 5px 0px 5px 0px;
+  left: 0px;
+  bottom: 0px;
+  width: 100%;
+  border-top-color: var(--inverse-color);
+  border-top-width: 2px;
+  border-top-style: solid;
+  background-color: var(--background-color);
+  color: var(--inverse-color);
+  z-index: 9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.center {
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 40px;
+}
+.center2 {
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.margin0 {
+  margin: 0 auto;
+  text-align: center;
+}
+.bottomCenter {
+  width: 100%;
+  margin: 0;
+  text-align: center;
+  margin-top: 10px;
+}
+.textCenter {
+  text-align: center;
+  margin: 0 auto;
+  margin: 20px;
+}
+.footleft {
+  text-align: left;
+  float: left;
+  width: 33%;
+  padding: 0px;
+}
+
+.footcenter {
+  text-align: center;
+  float: left;
+  width: 33%;
+}
+.footright {
+  text-align: right;
+  float: left;
+  width: 33%;
+}
+.fontStandard {
+  font-size: 80%;
+}
+.containerImg img {
+  cursor: pointer;
+  height: 7vw;
+  width: 7vw;
+  float: left;
+  z-index: 5;
+  border: 2px solid var(--inverse-color);
+  margin: 5px;
+  background-color: var(--background-color);
+  color: var(--inverse-color);
+
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+.tooltip {
+  position: relative;
+}
+.achievementTooltip {
+  position: relative;
+}
+.backgroundTooltip {
+  position: relative;
+}
+.skillTooltip {
+  position: relative;
+}
+.tooltip .tooltiptext {
+  visibility: hidden;
+  background-color: var(--background-color);
+  color: var(--inverse-color);
+  text-align: center;
+  border-radius: 6px;
+  border: 2px solid var(--inverse-color);
+  font-size: 12px;
+  z-index: 5;
+  position: absolute;
+
+  right: 100%;
+  width: 260px;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -120px;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+
+.achievementTooltip .achievementDescription {
+  visibility: hidden;
+  background-color: var(--background-color);
+  color: var(--inverse-color);
+  text-align: center;
+  border-radius: 6px;
+  border: 2px solid var(--inverse-color);
+  font-size: 12px;
+  z-index: 5;
+  position: absolute;
+
+  right: 100%;
+  width: 200px;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -80px;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+
+.backgroundTooltip .backgroundDescription {
+  visibility: hidden;
+  background-color: var(--background-color);
+  color: var(--inverse-color);
+  text-align: center;
+  border-radius: 6px;
+  border: 2px solid var(--inverse-color);
+  font-size: 12px;
+  z-index: 5;
+  position: absolute;
+
+  right: 100%;
+  width: 110px;
+  width: 160px;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -80px;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+.skillTooltip .skillDescription {
+  visibility: hidden;
+  background-color: var(--background-color);
+  color: var(--inverse-color);
+  text-align: center;
+  border-radius: 6px;
+  border: 2px solid var(--inverse-color);
+  font-size: 12px;
+  z-index: 5;
+  position: absolute;
+
+  right: 100%;
+  width: 260px;
+  bottom: -15px;
+  left: 50%;
+  margin-left: -120px;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+.tooltip:hover .tooltiptext {visibility: visible;}
+.achievementTooltip:hover .achievementDescription {visibility: visible;}
+.backgroundTooltip:hover .backgroundDescription {visibility: visible;}
+.skillTooltip:hover .skillDescription {visibility: visible;}
+
+.help {
+  color:var(--inverse-color);
+  opacity:0.5; 
+  cursor: pointer;
+  position: fixed;
+  margin: 0 auto;
+  bottom: 5%;
+  right: 23.4%;
+}
+/* Modal Foramtting Code */
+.modal__overlay {
+  transition: opacity 0.3s;
+  opacity: var(--modal-opacity);
+  z-index: 10000;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: rgb(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal__window {
+  z-index: 10000;
+  width: 1000px;
+}
+
+.modal__titlebar {
+  z-index: 10000;
+  height: 60px;
+  background: var(--background-color);
+  border: 2px solid var(--inverse-color);
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: space-between;
+}
+
+.modal__title {
+  z-index: 10000;
+  margin-left: 20px;
+  font-weight: bold;
+  font-size: 30px;
+  text-align: center;
+  color: var(--inverse-color);
+}
+
+.modal__close {
+  z-index: 10000;
+  background: transparent;
+  cursor: pointer;
+  color: black;
+  padding: 0px;
+  color: var(--inverse-color);
+  border: 2px solid var(--inverse-color);
+  border-radius: 20px;
+  font-weight: bold;
+  margin-right: 15px;
+  float: right;
+  transition: transform 0.4s ease-in-out;
+}
+
+.modal__close:hover {
+  transform: rotate(90deg);
+}
+
+.modal__content {
+  z-index: 10000;
+  background-color: var(--background-color);
+  color: var(--inverse-color);
+  border: var(--inverse-color);
+  border-style: solid;
+  border-width: 0px 2px 2px 2px;
+  padding: 10px;
+  font-size: 20px;
+}
+#movingClickerContainer {
+  border: 5px solid var(--inverse-color);
+  position: relative;
+  aspect-ratio: 3/1;
+  width: 54%;
+  z-index: 1;
+  margin-top: 20px;
+}
+#movingClicker {
+  cursor: pointer;
+  position: absolute;
+  background-color: green;
+  top: var(--y-position);
+  right: var(--x-position);
+  aspect-ratio: 1 / 1;
+  width: var(--moving-clicker-width);
+  z-index: 100;
+  border: .1px solid rgb(0, 255, 0);
+  transition: all 0.12s ease-in-out;
+}
+#movingClicker:hover {
+  transform: scale(1.05);
+}
+#movingClicker:active {
+  transform: scale(0.96);
+}
+#movingClickerContainer > .number {
+  z-index: 100;
+  font-size: 36px;
+  color: var(--inverse-color);
+  position: absolute;
+  font-weight: bolder;
+}
+.barcontainer {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.progress-bar__barcontainer {
+  width: 80%;
+  height: 2rem;
+  border-radius: 2rem;
+  border: 2px solid var(--inverse-color);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.progress-bar {
+  position: absolute;
+  height: 100%;
+  width: var(--level-width);
+  left: -10%;
+  background-color: green;
+  border-radius: inherit;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  z-index: 2;
+  transition: all 0.2s ease-in-out;
+}
+#barContainerText {
+  position: absolute;
+  text-align: center;
+  font-size: 25px;
+  z-index: 1000;
+}
+.skillButton {
+  position: relative;
+  border: 2px solid black;
+  border-radius: 10px;
+  float: left;
+  margin: 1% 0.42% 1% 0.42%;
+  width: 24%;
+  background-color: var(--secondary-color);
+  transition: all 0.2s ease-in-out;
+}
+.skillButton #head {
+  width: 100%;
+  text-align: center;
+  font-size:150%;
+  height: 25px;
+}
+.skillButton #cost {
+  margin: 0;
+  text-align: left;
+  width: 75%;
+  height:45px;
+  font-size: 140%;
+}
+.skillButton #count {
+  margin: 0;
+  width: 25%;
+  height:45px;
+  font-size: 170%;
+  text-align: center;
+  color: #595959;
+}
+.skillButton:hover {
+  background-color: rgb(181, 181, 181, 0.7);
+  transition: all 0.2s ease-in-out;
+}
+#spinner {
+  width: 300px;
+  height: 300px;
+  margin: 0 auto;
+  margin-top: 10px;
+  margin-bottom: 25px;
+  position: relative;
+}
+#wheelArrow {
+  position: absolute;
+  width: 30px;
+  left: 138px;
+  top: -10px;
+  z-index: 2;
+}
+#wheel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-image: url("./images/wheel.png");
+  background-size: contain;
+  z-index: -1;
+}
+.blur {
+  animation: blur 5s;
+}
+@keyframes blur {
+  0% {
+    filter: blur(1.5px);
+  }
+  40% {
+    filter: blur(1.3px);
+  }
+  60% {
+    filter: blur(1.0px);
+  }
+  80% {
+    filter: blur(0.8px);
+  }
+  100% {
+    filter: blur(0px);
+  }
+}
+.cooldown {
+  position: absolute;
+  z-index: 10000000;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  display: table;
+}
+.pointer {
+  cursor: pointer;
+}
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+body {
+  display: table;
+}
+
+.centered-text {
+  background-color: var(--background-color);
+  color: var(--inverse-color);
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+}
+#loadingHeader {
+  font-size: 1200%;
+}
+#loadingText {
+  font-size: 200%;
+}

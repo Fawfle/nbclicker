@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NB Clicker</title>
+    <link rel="stylesheet" href="main.css?version = 0.2.56"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link rel="icon" type="image/x-icon" href="./images/favicon.ico"/>
+  </head>
+
+  <body>
+    <div id="cooldown"></div>
+    <div id="notificationArea"></div>
+    <div class="sectionLeft">
+      <div id="gnduration"></div>
+      <div id="gnParameter"></div>
+      <div id="buttonMenu">
+        <div class="headContainer center unselectable">
+          <span class="points">0</span> BP<br /><span id="pointsPerSecond">0</span> BP per second</div><br/>
+        <div class="unselectable center" id="clicker">Get Bitches</div>
+        <span class="unselectable material-icons help" onclick="modal.help()">help</span>
+      </div>
+      <div id="upgradeMenu">
+        <div class="headContainer center unselectable">
+          <span class="points">0</span> BP<br />Upgrades<br /><span id="totalUpgrades">0</span>/<span id="upgradeTotal"></span>
+        </div>
+        <div class="textCenter containerImg" id="upgradeContainer"></div>
+        <span class="unselectable material-icons help" onclick="modal.upgrades()">help</span>
+      </div>
+      <div id="achievementMenu">
+        <div class="headContainer center unselectable">Achievements<br /><span id="totalAchievements">0</span>/<span id="achievementTotal"></span></div>
+        <div class="textCenter containerImg" id="achievementContainer"></div>
+      </div>
+      <div id="backgroundMenu">
+        <div class="headContainer center unselectable">Backgrounds<br />Contact me to buy a custom one!</div>
+        <div class="textCenter">
+          <button onclick="background.setMode(0)">Light Mode</button>
+          <button onclick="background.setMode(1)">Dark Mode</button>
+        </div>
+        <div class="textCenter containerImg" id="backgroundContainer"></div>
+      </div>
+      <div id="infoMenu">
+        <div class="headContainer center unselectable">Info</div>
+        <div class="textCenter">
+          <button onclick="modal.patchNotes();">Patch Notes</button>
+          <button onclick="window.open('https://docs.google.com/document/d/1ZdTtBxQp5oOoXtrTML5ftwCmlhHLnci9hMT4EKGQ9yQ/edit?usp=sharing','_blank')">Full Changelog</button>
+          <button onclick="resetGame();">Reset Game</button>
+          <div id="stats"></div>
+        </div>
+      </div>
+      <div id="prestigeMenu">
+        <div class="headContainer center unselectable">Prestige (<span id="prestigeTotalUpgrades">0</span>/<span id="prestigeUpgradeTotal"></span>)<br /><span id="prestigePoints">0</span> HM
+        </div>
+        <div class="textCenter">
+          <button onclick="ascend()">Ascend (+<span id="ascendPreview">0</span> HM)</button>
+          <div class="textCenter containerImg" id="prestigeContainer"></div>
+        </div>
+        <span class="unselectable material-icons help" onclick="modal.prestige()">help</span>
+      </div>
+      <div id="buttonMenu2">
+        <div class="headContainer center unselectable">Level <span id="level">0</span><br><span id="expPerSecond">0</span> EXP per second</div>
+        <div class="barcontainer">
+          <div class="center2 unselectable" id="barContainerText">0/50 EXP (0%)</div>
+          <div class="progress-bar__barcontainer"><div class="progress-bar"></div></div>
+        </div>
+
+        <div class="center" id="movingClickerContainer"><div id="movingClicker"></div></div>
+        <div class="center unselectable"><button onclick="display.checkLevelUp()">Level Up</button></div>
+        <span class="unselectable material-icons help" onclick="modal.gameTwo()">help</span>
+      </div>
+      <div id="skillsMenu">
+        <div class="headContainer center unselectable">Skills<br><span id="skillPoints">0</span> SP</div>
+        <div class="bottomCenter unselectable"><button onclick="skills.resetSkillPoints()">Reset SP</button></div>
+        <div id="skillContainer"></div>
+        <span class="unselectable material-icons help" onclick="modal.skills()">help</span>
+      </div>
+      <div id="gamblingMenu">
+        <div class="headContainer center unselectable">Gambling<br><span class="points">0</span> BP</div>
+        <div id="spinner">
+          <img class="unselectable" id="wheelArrow" src="./images/arrow.png"/>
+          <div class="unselectable" id="wheel"></div></div>
+          <div class="margin0" id="percentWagerContainer"></div>
+          <div class="margin0"><button class="pointer unselectable" id="spinnerButton">SPIN!</button><input type="text" id="spinnerInput"><select id="spinnerSelect" class="pointer unselectable"></select></div>
+          <div class="margin0" id="spinnerOutcome"></div>
+          <span class="unselectable material-icons help" onclick="modal.gambling()">help</span>
+        </div>
+      </div>
+    </div>
+    <div class="sectionFooter unselectable">
+      <div class="footleft"><span id="leftmenu"></span>
+        <span>Version <span id="version"></span></span>
+      </div>
+      <div class="footcenter"><span id="menu"></span>
+      </div>
+      <div class="footright"><button class="pointer unselectable" onclick="window.open('https://forms.gle/RC1a2M9z4Q9DpBFc6')">Poll #2</button><span id="rightmenu"></span>
+      </div>
+    </div>
+
+    <div class="sectionRight">
+      <div id="shopContainer"></div>
+      <div id="shopContainer2"></div>
+    </div>
+
+    <script defer src="main.js?version = 0.2.56"></script>
+  </body>
+</html>
