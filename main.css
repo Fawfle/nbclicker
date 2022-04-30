@@ -215,6 +215,9 @@ body {
   margin: 0 auto;
   text-align: center;
 }
+.center3 {
+  display: block;margin-left: auto;margin-right: auto;
+}
 .bottomCenter {
   width: 100%;
   margin: 0;

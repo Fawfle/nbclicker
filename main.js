@@ -974,7 +974,7 @@ function abbreviateNumber(num) {
     }
     return (num / si[index].v).toFixed(2).replace(/\.0+$|(\.[0-9]*[1-9])0+$/, "$1") + si[index].s;
 }
-
+let encryptedSave = "";
 function saveGame() {
 	var gameSave = {
 		points: game.points,
@@ -1005,6 +1005,7 @@ function saveGame() {
 		skillsCount: skills.count
 	};
 	localStorage.setItem("gameSave", JSON.stringify(gameSave));
+	encryptedSave = (btoa(JSON.stringify(gameSave)));
 }
 
 function loadGame() {
@@ -1499,34 +1500,45 @@ var modal = {
 		ModalWindow.openModal({
 			title:`Upgrades`,
 			content:"Upgrades cost BP and give powerful bonuses. Each appears once a specific requrement is met. A list of requrements include getting X amount of: <ul><li>A specific Building</li><li>Total Clicks</li><li>Total Buildings</li></ul> You can read the tooltip to see their bonuses and costs."})
-			game.lastVersion = game.version;
 	},prestige: function() {
 		r.style.setProperty('--modal-opacity','1');
 		ModalWindow.openModal({
 			title:`Prestige`,
 			content:"You can prestige to turn your <strong>Bitches</strong> into a new currency called <strong>HM</strong> which can be used to purchase special upgrades. You will loose all of your BP, buildings, and upgrades but you keep your HM, presige upgrades, and levels."})
-			game.lastVersion = game.version;
 	},gameTwo: function() {
 		r.style.setProperty('--modal-opacity','1');
 		ModalWindow.openModal({
 			title:`Button Boogaloo`,
 			content:"Click the button to gain <strong>EXP</strong>. Once you have enough EXP you level up. Each level gives a +10% Multiplier to the base game as well as granting skill points. You can also use your EXP to purchase buildings that passively give EXP. TIP: If you're fast enough you can click the button before it moves to get a combo."})
-			game.lastVersion = game.version;
 	}, skills: function() {
 		r.style.setProperty('--modal-opacity','1');
 		ModalWindow.openModal({
 			title:`Skills`,
 			content:"You gain skill points upon leveling up. You gain an extra point every 10 levels (1 for levels 1-10, 2 for levels 11-20, etc.) You can use them to purchase skills. You can always reset your skill points with no penalty so feel free to experiment!"})
-			game.lastVersion = game.version;
 	}, gambling: function() {
 		r.style.setProperty('--modal-opacity','1');
 		ModalWindow.openModal({
 			title:`Gambling`,
 			content:"Gambing allows you to put your hard earned BP on the line! You can navigate selecting a wager by using the text box to enter your number and the dropdown menu to select a Unit. Gambling has two outcomes: doubling your wager and giving you nothing."})
-			game.lastVersion = game.version;
-		}
+	},exportSave: function() {
+			r.style.setProperty('--modal-opacity','1');
+			ModalWindow.openModal({
+				title:`Export Save`,
+				content:`<textarea class="center3">${encryptedSave}</textarea><div class="textCenter">Copy Me!</div>`})
+	},importSave: function() {
+		r.style.setProperty('--modal-opacity','1');
+			ModalWindow.openModal({
+				title:`Import Save`,
+				content:`<div class="textCenter">Paste Here!</div><textarea id="loadSave" class="center3"></textarea><button class="center3" onclick="importSave()">Confirm</button>`})
+	} 
 }
-
+function importSave() {
+	if (confirm('This will overide your previous save. If you have entered your save incorrectly bad things will happen. Are you sure you want to load this save?')){
+	loadSave = atob(document.getElementById("loadSave").value);
+	localStorage.setItem("gameSave", loadSave);
+	location.reload()
+	}
+}
 document.addEventListener("DOMContentLoaded", () => ModalWindow.init());
 // funny stuff in console
 console.log('Congratulations! I see you you opened the console!')
