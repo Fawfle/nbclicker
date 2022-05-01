@@ -198,7 +198,22 @@ body {
   justify-content: center;
   align-items: center;
 }
-
+.sectionHeader {
+  position: absolute;
+  padding: 5px 0px 5px 0px;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  border-bottom-color: var(--inverse-color);
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  background-color: var(--background-color);
+  color: var(--inverse-color);
+  z-index: 9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .center {
   text-align: center;
   margin: 0 auto;

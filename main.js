@@ -26,6 +26,7 @@ var game = {
 	expBuildingMultiplier: 1,
 	skillClickPower: 1,
 	skillBuildingPower: 1,
+	totalGambles: 0,
 
 	addPoints: function(amount) {
 	this.points += amount;
@@ -370,7 +371,7 @@ var upgrade = {
 };
 
 var skills = {
-  name: ['XP Click Power','XP Building Power','Button Size','Building Bonus','XP Click Multiplier','XP Building Multiplier','BP Click Power','BP Building Power'],
+  name: ['XP Click Power','XP Building Power','Button Size','XP Building Bonus','XP Click Multiplier','XP Building Multiplier','BP Click Power','BP Building Power'],
   basecost: [1,1,2,2,2,2,3,3],
   cost: [1,1,2,2,2,2,2,2],
   count: [0,0,0,0,0,0,0,0],
@@ -459,7 +460,8 @@ var achievement = {
 		"Clicktastic","Carpal Tunnel","Click Jonas",
 		"You Got Bitches!","More!","Why you no play cookie clicker?","Pimp",
 		"Gnomies","They're Always Watching",
-		"3rd Finger","Ape Shit","InstaGram","Artificial Planets","Tang","Takeover","True Form"
+		"3rd Finger","Ape Shit","InstaGram","Artificial Planets","Tang","Takeover","True Form",
+		"Zuckerberg","Bill Gates","I am in shock","Newbie","Grinding","Mafia Boss","Gambling Habit","Gambling Problem","Gambing Addiction"
 	],
 	description: [
 		"Buy 50 Cursors","Buy 100 Cursors",
@@ -473,7 +475,8 @@ var achievement = {
 
 		"Get Bitches","Get 5 Bitches","Get 10 Bitches","get 25 bitches",
 		"Awaken 50 Gnomes","Awaken 100 Gnomes",
-		"Buy 150 Cursors","Buy 150 Chimps","Buy 150 Grandmas","Buy 150 Rockets","Buy 150 Simp Sauce","Buy 150 Supercomputers","Awaken 150 Gnomes"
+		"Buy 150 Cursors","Buy 150 Chimps","Buy 150 Grandmas","Buy 150 Rockets","Buy 150 Simp Sauce","Buy 150 Supercomputers","Awaken 150 Gnomes",
+		"Get 42 Trillion BP","Get 132 Quadrillion BP","Get 100 Bitches","Get to level 1","Get to level 15","Get to level 50","Gamble 5 times","Gamble 15 times","Gamble 30 times"
 	],
 	image: [
 		"cursor.png","cursorach2.png",
@@ -487,7 +490,8 @@ var achievement = {
 
 		"bitchesach1.png","bitchesach2.png","bitchesach3.png","bitchesach4.png",
 		"gnomeach1.png","gnomeach2.png",
-		"cursorach3.png","chimpach3.png","grandmaach3.png","rocketach3.png","simpsauceach3.png","supercomputerach3.png","gnomeach3.png"
+		"cursorach3.png","chimpach3.png","grandmaach3.png","rocketach3.png","simpsauceach3.png","supercomputerach3.png","gnomeach3.png",
+		"totalbpach3.png","totalbpach4.png","bitchesach5.png","levelach1.png","levelach2.png","levelach3.png","gamblingach1.png","gamblingach2.png","gamblingach3.png"
 	],
 	type: [
 		"building","building",
@@ -501,7 +505,8 @@ var achievement = {
 
 		"bitches","bitches","bitches","bitches",
 		"building","building",
-		"building",	"building",	"building",	"building",	"building",	"building",	"building"
+		"building",	"building",	"building",	"building",	"building",	"building",	"building",
+		"points","points","bitches","level","level","level","gambling","gambling","gambling"
 	],
 	requirement: [
 		50,100,
@@ -514,7 +519,8 @@ var achievement = {
 		1000,5000,10000,
 		1,5,10,25,
 		50,100,
-		150,150,150,150,150,150,150
+		150,150,150,150,150,150,150,
+		42000000000000,132000000000000000,100,1,15,50,5,15,30
 	],
 	buildingIndex: [
 		0,0,
@@ -527,7 +533,8 @@ var achievement = {
 		null,null,null, // clicks
 		null,null,null,null, // bitches
 		6,6,
-		0,1,2,3,4,5,6
+		0,1,2,3,4,5,6,
+		null,null,null,null,null,null,null,null,null
 	],
 	awarded: [], 
 	shown: [],
@@ -643,12 +650,16 @@ var display = {
 		this.updateInfoMenu()
 	},
 	checkAchievements: function (){
+		let update = "";
 		for (i = 0; i < achievement.name.length; i++) {
-			if (achievement.type[i] === "points" && game.totalPoints >= achievement.requirement[i] && achievement.awarded[i] === false) achievement.earn(i);
-			else if(achievement.type[i] === "click" && game.totalClicks >= achievement.requirement[i] && achievement.awarded[i] === false) achievement.earn(i);
-			else if (achievement.type[i] === "bitches" && game.totalBitches >= achievement.requirement[i] && achievement.awarded[i]  === false) achievement.earn(i);
-			else if (achievement.type[i] === "building" && building.highestCount[achievement.buildingIndex[i]] >= achievement.requirement[i] && achievement.awarded[i]  === false) achievement.earn(i);
+			if (achievement.type[i] === "points" && game.totalPoints >= achievement.requirement[i] && achievement.awarded[i] === false) {achievement.earn(i); update = true;}
+			else if(achievement.type[i] === "click" && game.totalClicks >= achievement.requirement[i] && achievement.awarded[i] === false) {achievement.earn(i);update = true;}
+			else if (achievement.type[i] === "bitches" && game.totalBitches >= achievement.requirement[i] && achievement.awarded[i]  === false) {achievement.earn(i);update = true;}
+			else if (achievement.type[i] === "building" && building.highestCount[achievement.buildingIndex[i]] >= achievement.requirement[i] && achievement.awarded[i]  === false) {achievement.earn(i);update = true;}
+			else if(achievement.type[i] === "level" && game.level >= achievement.requirement[i] && achievement.awarded[i] === false) {achievement.earn(i);update = true;}
+			else if(achievement.type[i] === "gambling" && game.totalGambles >= achievement.requirement[i] && achievement.awarded[i] === false) {achievement.earn(i);update = true;}
 		}
+		if (update === true) this.updateAchievements();
 	},
 	updateAchievements: function() {
 		achievementContainerIndex.setOrder();
@@ -693,7 +704,7 @@ var display = {
 			building.highestCount[i] = building.count[i]
 			}
 		}
-		this.updateAchievements();
+		this.checkAchievements();
 	},
 	updateAll: function() {
 		this.updatePoints();
@@ -738,6 +749,7 @@ var display = {
 			display.updateGameTwo()
 			display.updateSkills()
 			game.getMultiplier();
+			display.checkAchievements();
 		}
 	 }
 };
@@ -787,6 +799,8 @@ let achievementContainerIndex = {
 		"building5",
 		"building6",
 		"points",
+		"level",
+		"gambling",
 		"click",
 		"bitches"
 	],
@@ -1002,7 +1016,8 @@ function saveGame() {
 		exp: game.exp,
 		level: game.level,
 		skillPoints: game.skillPoints,
-		skillsCount: skills.count
+		skillsCount: skills.count,
+		totalGambles: game.totalGambles
 	};
 	localStorage.setItem("gameSave", JSON.stringify(gameSave));
 	encryptedSave = (btoa(JSON.stringify(gameSave)));
@@ -1026,6 +1041,7 @@ function loadGame() {
 		if (typeof savedGame.buildingHighestCount !== "undefined") building.highestCount = savedGame.buildingHighestCount
 		if (typeof savedGame.exp !== "undefined") game.exp = savedGame.exp
 		if (typeof savedGame.level !== "undefined") {game.level = savedGame.level; game.levelRequirement = Math.round(50 * Math.pow(1.2,game.level))}
+		if (typeof savedGame.totalGambles !== "undefined") game.totalGambles = savedGame.totalGambles
 		if (typeof savedGame.buildingCount !== "undefined") {
 			for(i = 0; i < savedGame.buildingCount.length; i++) {
 				building.count[i] = savedGame.buildingCount[i];
@@ -1309,8 +1325,10 @@ function createSpinner() {
 		let wager = document.getElementById("spinnerInput").value
 		let power = document.getElementById("spinnerSelect").value
 		let totalWager = power * wager
-		if (!isNaN(wager / 1 || answer)) {
+		if (!isNaN(wager / 1 || answer) && wager > 0) {
 		if (totalWager <= game.points) {
+		game.totalGambles++;
+		display.checkAchievements();
 		let element = document.createElement("div");
 		element.classList.add("cooldown","unselectable");
 		document.getElementById('cooldown').appendChild(element);
@@ -1400,13 +1418,12 @@ window.onload = function() {
 	setSelect()
 	setPercentWagerContainer()
 	game.getMultiplier();
-
 	display.updateAll();
 	if (game.visited == false) {
 		modal.help();
 		game.visited = true
-		saveGame();
 	}
+	saveGame();
 };
 function enableCheats() {r.style.setProperty('--background-image','url("./images/cheat.png")');r.style.setProperty('--background-repeat','no-repeat');r.style.setProperty('--background-position','center');window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ","_blank")}
 function openFeedback() {window.open('https://forms.gle/3Yo4EeKj9ktytCva8','_blank')}
@@ -1416,7 +1433,7 @@ setInterval (function() { // tick interval
 	game.exp += game.getExpPerSecond()
 	display.updateGameTwo();
 	display.updatePoints();
-	display.updateAchievements();
+	display.checkAchievements();
 	bitches.getBuildingBitches();
 	checkBitches();
 	display.updateInfoMenu();
