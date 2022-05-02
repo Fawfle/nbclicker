@@ -99,14 +99,14 @@ function updateDiscount() {
 	}
 }
 var buildingTwo = {
-	name: ['Murder','Mining'],
-	image:['murder.png','mining.png'],
-	count:[0,0],
-	highestCount:[0,0],
-	income:[0.1,0.45],
-	basecost:[60,300],
-	cost:[50,250],
-	tooltip:['Tried and True','Find all the valuables!'],
+	name: ['Murder','Mining','Quests'],
+	image:['murder.png','mining.png','quest.png'],
+	count:[0,0,0],
+	highestCount:[0,0,0],
+	income:[0.1,0.45,2.1],
+	basecost:[60,300,1500],
+	cost:[60,300,1500],
+	tooltip:['Tried and True','Find all the valuables!','Travel the world'],
 	purchase: function(index) {
 		if (game.exp >= this.cost[index]) {
 			game.exp -= this.cost[index];
@@ -682,7 +682,7 @@ var display = {
 	updateBackgroundShop: function() {
 		document.getElementById("backgroundContainer").innerHTML = "";
 		for (i=0; i < background.name.length; i++) {
-			document.getElementById("backgroundContainer").innerHTML += '<div class="backgroundTooltip"><img draggable="false" ondragstart="return false;" src="images/'+background.image[i]+'" onclick="background.setbg('+i+')"><span class="backgroundDescription">'+background.name[i]+'<br>'+background.artist[i]+'</span></div>';
+			document.getElementById("backgroundContainer").innerHTML += '<div class="backgroundTooltip"><img draggable="false" ondragstart="return false;" src="images/background'+i+'.png" onclick="background.setbg('+i+')"><span class="backgroundDescription">'+background.name[i]+'<br>'+background.artist[i]+'</span></div>';
 		}
 	},
 	updateInfoMenu: function() {
@@ -824,7 +824,8 @@ var background = {
 		"Noah and Bucket",
 		"Jojo",
 		"Fish",
-		"Pokimane"
+		"Pokimane",
+		"Dave"
 	],
 	artist: [
 		"Defualt",
@@ -835,18 +836,8 @@ var background = {
 		"Support from: Arden",
 		"Support from: Ian",
 		"Support from: Cailan",
-		"Support from: Arden"
-	],
-	image: [
-		"background0.png",
-		"background1.png",
-		"background2.png",
-		"background3.png",
-		"background4.png",
-		"background5.png",
-		"background6.png",
-		"background7.png",
-		"background8.png"
+		"Support from: Arden",
+		"Support from: Caleb"
 	],
 	repeat: [
 		"round",
@@ -857,7 +848,8 @@ var background = {
 		"repeat",
 		"no-repeat",
 		"repeat",
-		"no-repeat"
+		"no-repeat",
+		"repeat"
 	],
 	position: [
 		"top left",
@@ -868,10 +860,11 @@ var background = {
 		"top left",
 		"center",
 		"top left",
-		"center"
+		"center",
+		"top left"
 	],
 	setbg: function(index) {
-		r.style.setProperty('--background-image','url("./images/'+this.image[index]+'")');
+		r.style.setProperty('--background-image','url("./images/background'+index+'.png")');
 		r.style.setProperty('--background-repeat',''+this.repeat[index]+'');
 		r.style.setProperty('--background-position',''+this.position[index]+'');
 		background.currentBackgroundIndex = index
@@ -978,7 +971,9 @@ function abbreviateNumber(num) {
 	  {v: 1E21, s: "e21"},
 	  {v: 1E24, s: "e24"},
 	  {v: 1E27, s: "e27"},
-	  {v: 1E30, s: "e30"}
+	  {v: 1E30, s: "e30"},
+	  {v: 1E33, s: "e33"},
+	  {v: 1E36, s: "e36"},
       ];
     let index;
     for (index = si.length - 1; index > 0; index--) {
@@ -1366,7 +1361,7 @@ function createSpinner() {
 		wheel.style.transform = `rotate(${actualDeg}deg)`;
 	  });
 }
-const select = ["","K","M","B","T","q","e18","e21","e24"]
+const select = ["","K","M","B","T","q","e18","e21","e24","e27","e30","e33","e36"]
 function setSelect() {
 	for (i=0; i<select.length; i++) {
 	document.getElementById('spinnerSelect').innerHTML += `<option value ="${Math.pow(10,i * 3)}">${select[i]}</option>`
