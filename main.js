@@ -12,7 +12,7 @@ var game = {
 	prestigeAchievementMulti: 0,
 	gnFrequency: 300000, // 5 min
 	gnDuration: 10000,  // 10 sec
-	version: "0.2.61",
+	version: "0.2.71",
 	visited: false,
 	exp:0,
 	expClickPower: 1,
@@ -27,6 +27,7 @@ var game = {
 	skillClickPower: 1,
 	skillBuildingPower: 1,
 	totalGambles: 0,
+	purchaseAmount: 1,
 
 	addPoints: function(amount) {
 	this.points += amount;
@@ -70,9 +71,9 @@ var building = {
 	tooltip:["They click for you!","unpaid labor!",	"They're a Placeholder!","Search the galaxy for bitches!","Guaranteed to Get YOU Bitches!","Use advanced algorithms to help you get Bitches!","They use ancient eldritch magic to search for Bitches!"],
 	discount: 1,
 	purchase: function(index) {
-		if (game.points >= this.cost[index]) {
-			game.points -= this.cost[index];
-			this.count[index]++;
+		if (game.points >= (this.cost[index] + this.extraCost(index))) {
+			game.points -= (this.cost[index] + this.extraCost(index));
+			building.count[index] += game.purchaseAmount;
 			updateDiscount();
 			if (this.highestCount[index] < this.count[index]) {this.highestCount[index] = this.count[index]}
 			display.updatePoints();
@@ -91,7 +92,23 @@ var building = {
 		}
 		return totalCount
 	},
-	total: 0
+	total: 0,
+	updatePurchaseCount: function() {
+		let input = document.getElementById('inputPurchaseCount').value / 1
+		if (!isNaN(input / 1) && input > 0 && input <= 1000) {
+			game.purchaseAmount = input
+			display.updateShop()
+		}
+	}, extraCost: function(position) {
+		if (game.purchaseAmount != 1){
+		let totalCost = 0;
+		let initialCost = building.cost[position];
+		for (l=0; l<(game.purchaseAmount - 1); l++) {
+			totalCost += Math.round(initialCost * Math.pow(1.15,(1 + l)))
+		}
+		return totalCost
+		} else return 0;
+	}
 } 
 function updateDiscount() {
 	for (i=0; i<building.name.length; i++){
@@ -572,13 +589,14 @@ var display = {
 		document.getElementById("shopContainer").innerHTML = "";
 		document.getElementById("shopContainer2").innerHTML = "";
 		for (i= 0; i < building.name.length; i++) {
-			document.getElementById("shopContainer").innerHTML += '<span title="'+building.tooltip[i]+'\nBP per '+building.name[i]+': '+abbreviateNumber(Math.round((building.income[i] * game.multiplier) * 100) / 100)+'\nTotal BPpS: '+abbreviateNumber(Math.round((building.income[i] * game.multiplier * building.count[i]) * 100) / 100)+'""><table id="'+building.name[i]+'" class="shopButton unselectable" onclick="building.purchase('+i+')"><tr><td id="image"><img draggable="false" ondragstart="return false;" src="images/'+building.image[i]+'"></td><td id="nameAndCost"><div>'+building.name[i]+'</div><div><span>'+abbreviateNumber(building.cost[i])+'</span> BP<div></td><td id="amount"><span>'+building.count[i]+'</span></td></tr></table></span>'
-			if (game.points < building.cost[i]) {document.getElementById(building.name[i]).style.cssText = "pointer-events: none;filter: grayscale(100%);opacity: 0.6;"}
+			document.getElementById("shopContainer").innerHTML += '<span title="'+building.tooltip[i]+'\nBP per '+building.name[i]+': '+abbreviateNumber(Math.round((building.income[i] * game.multiplier) * 100) / 100)+'\nTotal BPpS: '+abbreviateNumber(Math.round((building.income[i] * game.multiplier * building.count[i]) * 100) / 100)+'""><table id="'+building.name[i]+'" class="shopButton unselectable" onclick="building.purchase('+i+')"><tr><td id="image"><img draggable="false" ondragstart="return false;" src="images/'+building.image[i]+'"></td><td id="nameAndCost"><div>'+building.name[i]+'</div><div><span>'+abbreviateNumber((building.cost[i] + building.extraCost(i)))+'</span> BP<div></td><td id="amount"><span>'+building.count[i]+'</span></td></tr></table></span>'
+			if (game.points < building.cost[i] + building.extraCost(i)) {document.getElementById(building.name[i]).style.cssText = "pointer-events: none;filter: grayscale(100%);opacity: 0.6;"}
 		}
 		for (i=0; i < buildingTwo.name.length; i++) {
 			document.getElementById("shopContainer2").innerHTML += '<span title="'+buildingTwo.tooltip[i]+'\nEXP per '+buildingTwo.name[i]+': '+abbreviateNumber(Math.round(((buildingTwo.income[i] + game.expFlatBonus) * game.expBuildingMultiplier) * 1000) / 1000)+'\nTotal EXPpS: '+abbreviateNumber(Math.round(((game.expFlatBonus + buildingTwo.income[i]) * buildingTwo.count[i] * game.expBuildingMultiplier) * 1000) / 1000)+'""><table id="'+buildingTwo.name[i]+'" class="shopButton unselectable" onclick="buildingTwo.purchase('+i+')"><tr><td id="image"><img draggable="false" ondragstart="return false;" src="images/'+buildingTwo.image[i]+'"></td><td id="nameAndCost"><div>'+buildingTwo.name[i]+'</div><div><span>'+abbreviateNumber(buildingTwo.cost[i])+'</span> EXP<div></td><td id="amount"><span>'+buildingTwo.count[i]+'</span></td></tr></table></span>'
 			if (game.exp < buildingTwo.cost[i]) {document.getElementById(buildingTwo.name[i]).style.cssText = "pointer-events: none;filter: grayscale(100%);opacity: 0.6;"}
 		}
+		document.getElementById("shopContainer").innerHTML += "<div style='text-align: center;margin: 0 auto;'>Current Purchase Amount: "+game.purchaseAmount+" <textb><input style='width: 30px;' id='inputPurchaseCount' type='text'><button onclick='building.updatePurchaseCount()'>Update</button></div>"
 	},
 	
 	updateUpgrades: function() {
@@ -957,23 +975,20 @@ function abbreviateUpgradeAffect(bonus) {
 }
 //https://www.html-code-generator.com/javascript/shorten-long-numbers for abbreviateNumber code
 function abbreviateNumber(num) {
-	num = num.toString().replace(/[^0-9.]/g, '');
-    if (num < 1000) {
+	if (num < 1000) {
         return num;
-    }
+    } 
+	else if (num >= 1000e+18){
+		return num;
+	}
+	num = num.toString().replace(/[^0-9.]/g, '');
     let si = [
       {v: 1E3, s: "K"},
       {v: 1E6, s: "M"},
       {v: 1E9, s: "B"},
       {v: 1E12, s: "T"},
       {v: 1E15, s: "q"},
-      {v: 1E18, s: "e18"},
-	  {v: 1E21, s: "e21"},
-	  {v: 1E24, s: "e24"},
-	  {v: 1E27, s: "e27"},
-	  {v: 1E30, s: "e30"},
-	  {v: 1E33, s: "e33"},
-	  {v: 1E36, s: "e36"},
+      {v: 1E18, s: "e+18"}
       ];
     let index;
     for (index = si.length - 1; index > 0; index--) {
@@ -1361,7 +1376,7 @@ function createSpinner() {
 		wheel.style.transform = `rotate(${actualDeg}deg)`;
 	  });
 }
-const select = ["","K","M","B","T","q","e18","e21","e24","e27","e30","e33","e36"]
+const select = ["","K","M","B","T","q","e18","e21","e24","e27","e30"]
 function setSelect() {
 	for (i=0; i<select.length; i++) {
 	document.getElementById('spinnerSelect').innerHTML += `<option value ="${Math.pow(10,i * 3)}">${select[i]}</option>`
@@ -1420,6 +1435,9 @@ window.onload = function() {
 	}
 	saveGame();
 };
+function removeHeader() {
+	document.getElementById('sectionHeader').style.display = "none";
+}
 function enableCheats() {r.style.setProperty('--background-image','url("./images/cheat.png")');r.style.setProperty('--background-repeat','no-repeat');r.style.setProperty('--background-position','center');window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ","_blank")}
 function openFeedback() {window.open('https://forms.gle/3Yo4EeKj9ktytCva8','_blank')}
 setInterval (function() { // tick interval
@@ -1433,7 +1451,7 @@ setInterval (function() { // tick interval
 	checkBitches();
 	display.updateInfoMenu();
 	for (i=0; i<building.name.length; i++) {
-		if (game.points < building.cost[i]) {document.getElementById(building.name[i]).style.cssText = "pointer-events: none;filter: grayscale(100%);opacity: 0.6;"} 
+		if (game.points < building.cost[i] + building.extraCost(i)) {document.getElementById(building.name[i]).style.cssText = "pointer-events: none;filter: grayscale(100%);opacity: 0.6;"} 
 		else {document.getElementById(building.name[i]).style.cssText = ""}
 	} for (i=0; i<buildingTwo.name.length; i++) {
 		if (game.exp < buildingTwo.cost[i]) {document.getElementById(buildingTwo.name[i]).style.cssText = "pointer-events: none;filter: grayscale(100%);opacity: 0.6;"} 
@@ -1505,7 +1523,7 @@ var modal = {
 		r.style.setProperty('--modal-opacity','1');
 		ModalWindow.openModal({
 			title:`Version ${game.version} Patch Notes`,
-			content:"<ul><li>Minor Bug and UI fixes</li><ul>"})
+			content:"<ul><li>New webiste fixed</li><li>Close Header (Suggestion!)</li><li>Purchase in larger increments</li><ul>"})
 			game.lastVersion = game.version;
 	},upgrades: function() {
 		r.style.setProperty('--modal-opacity','1');
