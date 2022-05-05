@@ -13,7 +13,7 @@ var game = {
 	prestigeAchievementMulti: 0,
 	gnFrequency: 300000, // 5 min
 	gnDuration: 10000,  // 10 sec
-	version: "0.2.702",
+	version: "0.2.75",
 	visited: false,
 	exp:0,
 	expClickPower: 1,
@@ -1545,7 +1545,7 @@ var modal = {
 		r.style.setProperty('--modal-opacity','1');
 		ModalWindow.openModal({
 			title:`Version ${game.version} Patch Notes`,
-			content:"<ul><li>New webiste fixed</li><li>Close Header (Suggestion!)</li><li>Purchase in larger increments</li><ul>"})
+			content:"<ul><li>New webiste fixed</li>Couple of New Upgrades and bug fixes</li><ul>"})
 			game.lastVersion = game.version;
 	},upgrades: function() {
 		r.style.setProperty('--modal-opacity','1');
