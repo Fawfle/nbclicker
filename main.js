@@ -95,7 +95,7 @@ var building = {
 	},
 	total: 0,
 	updatePurchaseCount: function() {
-		let input = document.getElementById('inputPurchaseCount').value / 1
+		let input = Math.floor(document.getElementById('inputPurchaseCount').value / 1)
 		if (!isNaN(input / 1) && input > 0 && input <= 1000) {
 			game.purchaseAmount = input
 			display.updateShop()
