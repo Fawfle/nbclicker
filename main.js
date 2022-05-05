@@ -3,6 +3,7 @@ var game = {
 	totalPoints: 0,
 	totalClicks: 0,
 	clickpercent: 0,
+	prestigeClickPercent: 0,
 	bitches: 0,
 	totalBitches: 0,
 	prestigePoints: 0,
@@ -12,7 +13,7 @@ var game = {
 	prestigeAchievementMulti: 0,
 	gnFrequency: 300000, // 5 min
 	gnDuration: 10000,  // 10 sec
-	version: "0.2.71",
+	version: "0.2.702",
 	visited: false,
 	exp:0,
 	expClickPower: 1,
@@ -160,7 +161,8 @@ var upgrade = {
 		"Gnomeo and Juliet","Gnome Alone","The Greatest Gnomeman","Game of Gnomes", "Sherlock Gnomes",
 		"Dino Nuggies","Disarming Personality","Haggling","Coupons","Factory",
 		"Poor Working Conditions","Elder Pledge","Time Travel","Secret Formula","Hardest Drive","I'm Sorry","Tinder","Honey","Mousepad",
-		"Pick up Lines","Day Trader","Ferret","Small Crime","Golden Nuggets","Crime Lord","NFT"
+		"Pick up Lines","Day Trader","Ferret","Small Crime","Golden Nuggets","Crime Lord","NFT","Monopoly",
+		"Clickbait","Clock","Gottem","\"Click\"","Drugs"
 	],
 	flavorText: [
 		"Get it?","Cursors are now made of wood!",  "They're hard!",  "Shiny!",  "Harder!",  "It's a reference!",
@@ -176,10 +178,11 @@ var upgrade = {
 		"The definitive guide to bitches!","Caution: Extremely Powerful","Don't let the government take your BP!","Easy Money","You've never tried it","Actually Legal!",
 		"Cat, more like creatively bankrupt","I'm out of ideas! (For the second time)",
 		"Get more Nuggets!",
-		"The 4rd Best Movie ever Made","They're inside your home","\"The Gnomefather of children'	s entertainment\"","All Gnomes must die","The Peak of Cinema",
+		"The 4rd Best Movie ever Made","They're inside your home","\"The Gnomefather for children's entertainment\"","All Gnomes must die","The Peak of Cinema",
 		"Delicious","Talk your way into anything!","It's like a game!","Get rewarded for hoarding!","Take control of nugget production",
 		"Cut Corners!","This is simple ritual involving anti-aging cream, cookie batter mixed in the moonlight, and a live chicken.","I bet you didn't notice these upgrades triple BP","I'm pretty sure half these ingredients aren't legal","I've just given up at this point","But you have to see this","Find The Women","Saves you money","Improved Performance",
-		"Sorry, I had to do it","A real mans job","Exotic","A Humble Start","Glistening","be your own boss!","They're all the rage"
+		"Sorry, I had to do it","A real mans job","Exotic","A Humble Start","Glistening","be your own boss!","They're all the rage","True Control",
+		"Can't believe you fell for that","Typo","Can't believe you fell for that","Adam Sandler's Masterpiece","These ones are for you"
 	],
 	image: [
 		"cursorupg1.png","cursorupg2.png","cursorupg3.png","cursorupg4.png","cursorupg5.png","cursorupg6.png","chimpupg1.png","chimpupg2.png","chimpupg3.png","chimpupg4.png","chimpupg5.png","grandmaupg1.png","grandmaupg2.png","grandmaupg3.png","grandmaupg4.png","grandmaupg5.png","rocketupg1.png","rocketupg2.png","rocketupg3.png","rocketupg4.png","rocketupg5.png","simpsauceupg1.png","simpsauceupg2.png","simpsauceupg3.png","simpsauceupg4.png","simpsauceupg5.png","supercomputerupg1.png","supercomputerupg2.png","supercomputerupg3.png","supercomputerupg4.png","supercomputerupg5.png",
@@ -191,7 +194,8 @@ var upgrade = {
 		"gnomeupg1.png","gnomeupg2.png","gnomeupg3.png","gnomeupg4.png","gnomeupg5.png",
 		"prestigenuggetduration1.png","discount1.png","discount2.png","discount3.png","prestigenuggetfrequency2.png",
 		"chimpupg6.png","grandmaupg6.png","rocketupg6.png","simpsauceupg6.png","supercomputerupg6.png","gnomeupg6.gif","globalmulti4.png","discount4.png","clickchanceupg4.png",
-		"prestigechanceupg4.png","prestigemultiupg4.png","prestigeachievementmulti3.png","prestigemultiupg5.png","prestigenuggetduration2.png","prestigemultiupg6.png","prestigeachievementmulti4.png"
+		"prestigechanceupg4.png","prestigemultiupg4.png","prestigeachievementmulti3.png","prestigemultiupg5.png","prestigenuggetduration2.png","prestigemultiupg6.png","prestigeachievementmulti4.png","prestigenuggetfrequency3.png",
+		"prestigeclick1.png","prestigeclick2.png","prestigeclick3.png","prestigeclick4.png","prestigeclick5.png"
 	],
 	type: [
 		"building","building","building","building", "building", "building",
@@ -212,7 +216,8 @@ var upgrade = {
 		"building","building","building","building","building",
 		"prestigenuggetduration","discount","discount","discount","prestigenuggetfrequency",
 		"building","building","building","building","building","building","globalmulti","discount","clickchance",
-		"prestigechance","prestigemulti","prestigeachievementmulti","prestigemulti","prestigenuggetduration","prestigemulti","prestigeachievementmulti"
+		"prestigechance","prestigemulti","prestigeachievementmulti","prestigemulti","prestigenuggetduration","prestigemulti","prestigeachievementmulti","prestigenuggetfrequency",
+		"prestigeclick","prestigeclick","prestigeclick","prestigeclick","prestigeclick"
 	],
 	cost:[
 		540,2600,27500,3575000,30000000,5000000000,  // cursors
@@ -238,7 +243,8 @@ var upgrade = {
 		15,
 		10000000,100000000,1000000000, 30,
 		50000000000,550000000000,6000000000000,65000000000000,700000000000000,10000000000000000,10000000000,10000000000,1000000000,
-		45,35,45,90,90,200,120
+		45,35,45,90,90,200,120,200,
+		3,12,35,90,200
 	],
 	buildingIndex:[
 		0,0,0,0,0,0,
@@ -255,7 +261,8 @@ var upgrade = {
 		null,null,null,null,null,null,null,6,6,6,6,6,
 		null,null,null,null,null,
 		1,2,3,4,5,6,null,null,null,
-		null,null,null,null,null,null,null
+		null,null,null,null,null,null,null,null,
+		null,null,null,null,null
 	],
 	requirement: [
 		1,5,25,50,100,150,
@@ -272,11 +279,12 @@ var upgrade = {
 		null,null,null,null,null,null,null,null,null,1,5,25,50,100,
 		null,100,200,300,null,
 		150,150,150,150,150,150,400,400,10000,
-		null,null,null,null,null,null,null
+		null,null,null,null,null,null,null,null,
+		null,null,null,null,null
 	],
 	bonus: [
 		// Buildings: 2 Clickchance: 0.5 Clickpercent: 0.01 Globalmulti: 2 Discount: 0.01
-		// Prestigechance: 0.5 Prestigemulti: 4 Achievementmulti: 0.2 nuggetfrequency: 60000 nuggetduration: 5000
+		// Prestigechance: 0.5 Prestigemulti: 4 Achievementmulti: 0.2 nuggetfrequency: 60000 nuggetduration: 5000 prestigeclick: 0.03
 		2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
 		0.5,0.5,0.5,
 		0.01,0.01,0.01,0.01,0.01,0.01,
@@ -288,7 +296,8 @@ var upgrade = {
 		2,2,2,2,2,
 		5000,0.01,0.01,0.01,60000,
 		3,3,3,3,3,3,2,0.01,0.5,
-		0.5,4,0.2,4,5000,4,0.2
+		0.5,4,0.2,4,5000,4,0.2,60000,
+		0.03,0.03,0.03,0.03,0.03
 	],
 	purchased: [],
 	shown: [],
@@ -296,7 +305,7 @@ var upgrade = {
 		let total = 0;
 		let prestigetotal = 0;
 		for (i=0; i<this.name.length; i++){
-			if (this.type[i] == "prestigechance" || this.type[i] == "prestigemulti" || this.type[i] == "prestigeachievementmulti" || this.type[i] == "prestigenuggetfrequency"|| this.type[i] == "prestigenuggetduration") {
+			if (this.type[i] == "prestigechance" || this.type[i] === "prestigeclick" || this.type[i] == "prestigemulti" || this.type[i] == "prestigeachievementmulti" || this.type[i] == "prestigenuggetfrequency"|| this.type[i] == "prestigenuggetduration") {
 				prestigetotal ++;
 			} else {
 				total ++;
@@ -310,7 +319,7 @@ var upgrade = {
 		let prestigetotal=0;
 		for (i=0; i<this.name.length; i++) {
 			if (this.purchased[i] == true){
-				if (this.type[i] === "prestigechance" || this.type[i] === "prestigemulti" || this.type[i] == "prestigeachievementmulti" || this.type[i] == "prestigenuggetfrequency"|| this.type[i] == "prestigenuggetduration") {
+				if (this.type[i] === "prestigechance" || this.type[i] === "prestigeclick" || this.type[i] === "prestigemulti" || this.type[i] == "prestigeachievementmulti" || this.type[i] == "prestigenuggetfrequency"|| this.type[i] == "prestigenuggetduration") {
 					prestigetotal ++;
 				} else {
 					total ++;
@@ -378,6 +387,12 @@ var upgrade = {
 			}else if (upgrade.type[index] == "prestigenuggetduration") {
 				game.prestigePoints -= upgrade.cost[index];
 				game.gnDuration += upgrade.bonus[index];
+				upgrade.purchased[index] = true;
+				display.updateAll();
+				game.getMultiplier();
+			}else if (upgrade.type[index] == "prestigeclick") {
+				game.prestigePoints -= upgrade.cost[index];
+				game.prestigeClickPercent += upgrade.bonus[index];
 				upgrade.purchased[index] = true;
 				display.updateAll();
 				game.getMultiplier();
@@ -452,8 +467,10 @@ if(confirm("Are you sure you want to prestige? Your bitches will be converted in
 				if (upgrade.type[i] != "prestigeachievementmulti") {
 					if (upgrade.type[i] != "prestigenuggetfrequency") {
 						if (upgrade.type[i] != "prestigenuggetduration") {
-							upgrade.purchased[i] = false;
-							upgrade.shown[i] = false;
+							if (upgrade.type[i] != "prestigeclick") {
+								upgrade.purchased[i] = false;
+								upgrade.shown[i] = false;
+							}
 						}
 					}
 				}
@@ -645,6 +662,8 @@ var display = {
 					document.getElementById(upgrade.type[i]).innerHTML += '<div class="tooltip"><img draggable="false" ondragstart="return false;" src="images/'+upgrade.image[i]+'" onclick="upgrade.purchase('+i+')"><span class="tooltiptext">'+upgrade.name[i]+'<br>'+upgrade.flavorText[i]+'<br>Nuggets appear <strong>'+upgrade.bonus[i] / 60000+'</strong> minute faster<br>('+abbreviateNumber(upgrade.cost[i])+' HM)</span></div>';
 				}if (upgrade.type[i] == "prestigenuggetduration") {
 					document.getElementById(upgrade.type[i]).innerHTML += '<div class="tooltip"><img draggable="false" ondragstart="return false;" src="images/'+upgrade.image[i]+'" onclick="upgrade.purchase('+i+')"><span class="tooltiptext">'+upgrade.name[i]+'<br>'+upgrade.flavorText[i]+'<br>Nuggets will last <strong>+'+upgrade.bonus[i] / 1000+'</strong> seconds longer<br>('+abbreviateNumber(upgrade.cost[i])+' HM)</span></div>';
+				}if (upgrade.type[i] == "prestigeclick") {
+					document.getElementById(upgrade.type[i]).innerHTML += '<div class="tooltip"><img draggable="false" ondragstart="return false;" src="images/'+upgrade.image[i]+'" onclick="upgrade.purchase('+i+')"><span class="tooltiptext">'+upgrade.name[i]+'<br>'+upgrade.flavorText[i]+'<br>Clicks give <strong>+'+abbreviateUpgradeAffect(upgrade.bonus[i])+'</strong> of BPpS<br>('+abbreviateNumber(upgrade.cost[i])+' HM)</span></div>';
 				}
 			}
 		}
@@ -797,6 +816,7 @@ let prestigeContainerIndex = {
 		"prestigechance",
 		"prestigemulti",
 		"prestigeachievementmulti",
+		"prestigeclick",
 		"prestigenuggetfrequency",
 		"prestigenuggetduration"
 	],
@@ -971,7 +991,8 @@ function abbreviateUpgradeAffect(bonus) {
 	else if (bonus === 0.5) return "doubled"
 	else if (bonus === 0.2) return "20%"
 	else if (bonus === 3) return "tripled"
-	else return "undefined"
+	else if (bonus == 0.03) return "3%"
+	else return bonus
 }
 //https://www.html-code-generator.com/javascript/shorten-long-numbers for abbreviateNumber code
 function abbreviateNumber(num) {
@@ -1072,6 +1093,7 @@ function loadGame() {
 				else if (upgrade.type[i] === "globalmulti" && building.total >= upgrade.requirement[i]) {game.globalMultiplier *= upgrade.bonus[i]; upgrade.purchased[i] = true;}
 				else if (upgrade.type[i] === "discount" && building.total >= upgrade.requirement[i]) {building.discount -= upgrade.bonus[i]; upgrade.purchased[i] = true;}
 				else if (upgrade.type[i] === "prestigechance") {bitches.buildingChance *= upgrade.bonus[i]; upgrade.purchased[i] = true;}
+				else if (upgrade.type[i] === "prestigeclick") {game.prestigeClickPercent += upgrade.bonus[i]; upgrade.purchased[i] = true;}
 				else if (upgrade.type[i] === "prestigemulti") {game.prestigeMulti *= upgrade.bonus[i]; upgrade.purchased[i] = true;}
 				else if (upgrade.type[i] === "prestigeachievementmulti") {game.prestigeAchievementMulti += upgrade.bonus[i]; upgrade.purchased[i] = true;}
 				else if (upgrade.type[i] === "prestigenuggetfrequency") {game.gnFrequency -= upgrade.bonus[i]; upgrade.purchased[i] = true;}
@@ -1131,7 +1153,7 @@ var bitches = {
 
 	getBuildingBitches: function() {
 		let totalBuildingChance = this.buildingChance / building.gettotal();
-		if (randomNumber(0,totalBuildingChance) == 1) {
+		if (randomNumber(1,totalBuildingChance) == 1) {
 			game.bitches++;
 			game.totalBitches++;
 			display.updateAll();
@@ -1259,7 +1281,7 @@ function createNumberOnClick(event) {
 
 	//create the number
 	let element = document.createElement("div");
-	element.textContent = "+" + abbreviateNumber(Math.round(((1*game.multiplier + game.getPointsPerSecond() * game.clickpercent) * game.temporaryClickMultiplier) * game.skillClickPower * 100) / 100)
+	element.textContent = "+" + abbreviateNumber(Math.round(((1*game.multiplier + game.getPointsPerSecond() * (game.prestigeClickPercent + game.clickpercent)) * game.temporaryClickMultiplier) * game.skillClickPower * 100) / 100)
 	element.classList.add("number","unselectable");
 	element.style.left = position.x + "px";
 	element.style.top = position.y + "px";
@@ -1282,7 +1304,7 @@ function createNumberOnClick(event) {
 }
 
 document.getElementById("clicker").addEventListener("click", function(event) {
-	game.addPoints((1*game.multiplier + game.getPointsPerSecond() * game.clickpercent) * game.temporaryClickMultiplier * game.skillClickPower)
+	game.addPoints((1*game.multiplier + game.getPointsPerSecond() * (game.prestigeClickPercent + game.clickpercent)) * game.temporaryClickMultiplier * game.skillClickPower)
 
 	createNumberOnClick(event);
 }, false);
@@ -1347,7 +1369,7 @@ function createSpinner() {
 		let outcome = Math.round(Math.random() * 360)
 		setTimeout(function(){ if ((0 <= outcome && outcome < 45) || (135<=outcome && outcome <225) || (315<= outcome && outcome <= 360)) { game.points += totalWager;answer.innerHTML = `you win! (gained  ${abbreviateNumber(totalWager)})`;}
 		else { game.points -= totalWager;answer.innerHTML = `you loose! (lost ${abbreviateNumber(totalWager)})`;}
-		display.updatePoints();element.remove()},4000)
+		display.updatePoints();element.remove();saveGame()},4000)
 		// display stuff
 		startButton.style.pointerEvents = 'none'; // disable button
 		// Calculate a new rotation between 5000 and 10 000
