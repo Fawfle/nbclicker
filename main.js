@@ -13,7 +13,7 @@ var game = {
 	prestigeAchievementMulti: 0,
 	gnFrequency: 300000, // 5 min
 	gnDuration: 10000,  // 10 sec
-	version: "0.2.75",
+	version: "0.2.752",
 	visited: false,
 	exp:0,
 	expClickPower: 1,
