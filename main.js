@@ -13,7 +13,7 @@ var game = {
 	prestigeAchievementMulti: 0,
 	gnFrequency: 300000, // 5 min
 	gnDuration: 10000,  // 10 sec
-	version: "0.2.752",
+	version: "0.2.753",
 	visited: false,
 	exp:0,
 	expClickPower: 1,
@@ -863,7 +863,8 @@ var background = {
 		"Jojo",
 		"Fish",
 		"Pokimane",
-		"Dave"
+		"Dave",
+		"\It's not League of Legends\""
 	],
 	artist: [
 		"Defualt",
@@ -875,7 +876,8 @@ var background = {
 		"Support from: Ian",
 		"Support from: Cailan",
 		"Support from: Arden",
-		"Support from: Caleb"
+		"Support from: Caleb",
+		"Support from: Daniel"
 	],
 	repeat: [
 		"round",
@@ -887,6 +889,7 @@ var background = {
 		"no-repeat",
 		"repeat",
 		"no-repeat",
+		"repeat",
 		"repeat"
 	],
 	position: [
@@ -899,7 +902,8 @@ var background = {
 		"center",
 		"top left",
 		"center",
-		"top left"
+		"top left",
+		"center"
 	],
 	setbg: function(index) {
 		r.style.setProperty('--background-image','url("./images/background'+index+'.png")');
@@ -909,7 +913,7 @@ var background = {
 	},
 	modeColor:["rgb(255,255,255)","rgb(43,42,51)"], currentColor:"rgb(255,255,255)",
 	modeTextColor:["rgb(0,0,0)","rgb(225,225,225)"], currentTextColor:"rgb(0,0,0)",
-	modeButton:['#ffffff','#212121'], currentButton:'url("./images/button.png")',
+	modeButton:['#ffffff','#212121'], currentButton:['#ffffff'],
 	modeSecondary:['rgb(220,220,220, 0.7)','rgb(17,17,17, 0.7)'], currentSecondary:'rgb(220,220,220, 0.7)',
 	setMode: function(index) {
 		r.style.setProperty('--background-color',''+this.modeColor[index]+'');
@@ -922,6 +926,12 @@ var background = {
 		this.currentSecondary = this.modeSecondary[index]
 	}
 }
+
+function removeButtonFill() {
+		r.style.setProperty('--button-color','transparent');
+		background.currentButton = 'transparent';
+		display.updateAll();
+	}
 
 var menu = {
 	onmenu: "",
